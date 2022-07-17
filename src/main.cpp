@@ -46,8 +46,7 @@ int main(){
   
   // File which I am outputting the calculations to
   std::ofstream angles;
-  //angles.open ("../outputs/angles_rkf4_openmp_JULY.csv");
-  //angles.open ("output_redemption.txt", std::ios::out);
+  
   angles.close();
   angles.open ("../outputs/angles_rkf4_openmp_JULY12.csv");
   if(angles){
@@ -114,7 +113,7 @@ int main(){
   double initial_theta_cs = 3.14159/2.0;
 
 
-  
+  /*  
 #pragma omp parallel for default(none) shared(picture_width, picture_height, \
 					      cameras_orbital_components, kerr_constant, \
 					      cameras_comp_relative_to_fido,r_c,beta_speed, \
@@ -123,7 +122,7 @@ int main(){
 	  spherical_comp_ray_wrt_fido_reference,rays_canonical_momenta,\
 	  ray_equations,ray_trace,theta_cs, phi_cs)
   
-  
+  */
 
 
 
@@ -131,16 +130,20 @@ int main(){
 
 
     
-  for(int horizontal_pixel=0; horizontal_pixel<200; horizontal_pixel++){
+  for(int horizontal_pixel=-600; horizontal_pixel<600; horizontal_pixel++){
     
 
-
+    // Middle of the picture start angles
     phi_cs = 3.14159+horizontal_pixel*((2*3.14159)/picture_width);
-    
     theta_cs=3.14159/2.0;
+
+    //phi_cs = (3.14159/10.0)+horizontal_pixel*((2*3.14159)/picture_width);
+    //theta_cs = 3.14159/4.0;
+
+    
       
       
-      for(int vertical_pixel=0; vertical_pixel<200; vertical_pixel++){
+      for(int vertical_pixel=-400; vertical_pixel<400; vertical_pixel++){
 
 	theta_cs = (initial_theta_cs)+vertical_pixel*((3.14159)/picture_height);
 
@@ -237,7 +240,7 @@ int main(){
 
 	  // I need to change the if condition later to one that only specifies
 	  // it doesnt come from event horizon.
-	  if (event_horizon == 0 || event_horizon == 1){
+	  if (event_horizon == 0){
 
 
 	    
@@ -291,15 +294,14 @@ int main(){
 	      angles.flush();
 	    }
 	  }
-	  /*
+	  
 	  else if(event_horizon==1){
-	    std::cout << "MAYBE???\n";
 	    // If the light comes from the event horizon, that pixel needs to be black in the
 	    // resulting image perceived at the cameras location
 	    angles << theta_cs << "," << phi_cs << ",";
 	    angles << 0 << "," << 0 << "\n";
 	  }
-	  */
+	  
 	  
 
 
